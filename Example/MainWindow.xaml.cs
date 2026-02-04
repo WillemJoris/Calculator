@@ -27,6 +27,8 @@ namespace Example
 		private void AcButton_Click(object sender, RoutedEventArgs e)
 		{
 			resultLabel.Content = "0";
+			result = 0;
+			lastNumber = 0;
 		}
 
 		private void NegativeButton_Click(object sender, RoutedEventArgs e)
@@ -37,21 +39,25 @@ namespace Example
 				resultLabel.Content = lastNumber.ToString();
 			}
 		}
-
 		private void PercentageButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (double.TryParse(resultLabel.Content.ToString(), out lastNumber) && lastNumber != 0)
+			double tempNumber;
+			if (double.TryParse(resultLabel.Content.ToString(), out tempNumber) && lastNumber != 0)
 			{
-				lastNumber = lastNumber / 100;
-				resultLabel.Content = lastNumber.ToString();
+				tempNumber = (tempNumber / 100);
+				if( lastNumber != 0)
+					tempNumber *= lastNumber;
+				resultLabel.Content = tempNumber.ToString();
 			}
-		}
 
-		
+		}
 
 		private void PointButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			if (!resultLabel.Content.ToString().Contains("."))
+			{
+				resultLabel.Content = $"{resultLabel.Content}.";
+			}
 		}
 
 		private void CalculateButton_Click(object sender, RoutedEventArgs e)
